@@ -1,0 +1,243 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Tushar Kale.ipynb",
+      "provenance": []
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "YO6S5HlNDFtI"
+      },
+      "source": [
+        "import numpy as np\n",
+        "import pandas as pd\n",
+        "import sklearn"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "P3XLbisTESqY"
+      },
+      "source": [
+        "from sklearn.datasets import load_boston\n",
+        "df=load_boston()\n"
+      ],
+      "execution_count": 9,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "R5XrsBQSPxIg"
+      },
+      "source": [
+        "df"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "-9kTJSAkP2M6",
+        "outputId": "b4f58534-5284-472e-f3e1-c5f071892565"
+      },
+      "source": [
+        "df.keys()"
+      ],
+      "execution_count": 11,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "dict_keys(['data', 'target', 'feature_names', 'DESCR', 'filename'])"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 11
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "XULXTJGHQA3k"
+      },
+      "source": [
+        "print(df.DESCR)"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "30BGOzbgRsp7"
+      },
+      "source": [
+        ""
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "93cLHqbXQKwP"
+      },
+      "source": [
+        "print(df.data)"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "bXiKlkekQlRO"
+      },
+      "source": [
+        "boston=pd.DataFrame(df.data,columns=df.feature_names)\n",
+        "boston.head()                              "
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "eFLHJ7WRRvc5"
+      },
+      "source": [
+        "boston['MED']=df.target\n",
+        "boston.head()"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "umas2xOASInL"
+      },
+      "source": [
+        "boston.isnull()"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "FHuqIJCfSPx1"
+      },
+      "source": [
+        "boston.isnull().sum()"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "h7zda9ggSYWW"
+      },
+      "source": [
+        "from sklearn.model_selection import train_test_split \n",
+        "X=boston.drop('MED',axis=1)\n",
+        "Y=boston['MED']\n",
+        "X_train,X_test,Y_train ,Y_test=train_test_split(X,Y,test_size=0.15 , random_state=5)\n",
+        "print(X_train.shape)\n",
+        "print(X_test.shape )\n",
+        "print(Y_train.shape)\n",
+        "print(Y_test.shape)\n",
+        "\n",
+        "\n",
+        "              "
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "fTmC9AtRVB5M"
+      },
+      "source": [
+        "from sklearn.linear_model import LinearRegression\n",
+        "from sklearn.metrics import mean_squared_error\n",
+        "\n"
+      ],
+      "execution_count": 30,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "xVzJqNNKW-2u"
+      },
+      "source": [
+        "lin_model= LinearRegression()\n",
+        "lin_model.fit(X_train, Y_train)"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "eW0bGWwuXasm"
+      },
+      "source": [
+        "y_train_predict=lin_model.predict(X_train)\n",
+        "rmse=(np.sqrt(mean_squared_error (Y_train,y_train_predict)))\n",
+        "\n",
+        "\n",
+        "print(\" the model performs for training  set \")\n",
+        "print('RMSE is {}',format(rmse))\n",
+        "print(\"\\n\")\n",
+        "\n",
+        "\n"
+      ],
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {
+        "id": "jSN_xHF0Yb92"
+      },
+      "source": [
+        "y_test_predict=lin_model.predict(X_test )\n",
+        "rmse=(np.sqrt(mean_squared_error (Y_test, y_test_predict)))\n",
+        "\n",
+        "\n",
+        "print(\"the model performsance for testing is set\")\n",
+        "print('RMSE is {}',format(rmse))"
+      ],
+      "execution_count": null,
+      "outputs": []
+    }
+  ]
+}
